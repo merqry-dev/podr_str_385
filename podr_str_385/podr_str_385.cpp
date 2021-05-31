@@ -4,21 +4,22 @@ using namespace std;
 
 float calculateFunction(float x)
 {
-    return (3 * x * x + x - 2);
+    return 3 * x * x + x - 2;
 }
 
-bool zeroN(float a, float b, float& x)
+bool zeroN(float a, float b, int n, int j, float& x)
 {
+    j++;
     x = (a + b) / 2;
-    if (calculateFunction(x) != 0)
+    if (calculateFunction(x) != 0 && j < n)
     {
         if (signbit(calculateFunction(a)) != signbit(calculateFunction(x)))
         {
-            zeroN(a, x, x);
+            zeroN(a, x, n, j, x);
         }
         else if (signbit(calculateFunction(x)) != signbit(calculateFunction(b)))
         {
-            zeroN(x, b, x);
+            zeroN(x, b, n, j, x);
         }
         else
         {
@@ -41,12 +42,13 @@ bool zeroDelta2(float a, float b, float delta, float& x)
 
 int main()
 {
+    int j, n;
     float x;
     float a = 0;
     float b = 0.9;
-    zeroN(a, b, x);
-    cout << x << endl;
-    if (zeroN(a, b, x))
+    n = 10;
+    j = 0;
+    if (zeroN(a, b, n, j, x))
     {
         cout << "jest " << x << endl;
     }
