@@ -12,6 +12,11 @@ float calculateFunction2(float x)
     return x * x * x + x * x - 2 * x;
 }
 
+float calculateFunction3(float x)
+{
+    return 3 * x*x*x - 2*x*x - 3*x + 2;
+}
+
 bool zeroN(float a, float b, int n, int j, float& x)
 {
     j++;
@@ -57,6 +62,22 @@ bool zeroDelta1(float a, float b, float delta, float& x)
 
 bool zeroDelta2(float a, float b, float delta, float& x)
 {
+    x = (a + b) / 2;
+    if (calculateFunction3(x) != 0 && fabs(b - a) > delta)
+    {
+        if (signbit(calculateFunction3(a)) != signbit(calculateFunction3(x)))
+        {
+            zeroDelta2(a, x, delta, x);
+        }
+        else if (signbit(calculateFunction3(x)) != signbit(calculateFunction3(b)))
+        {
+            zeroDelta2(x, b, delta, x);
+        }
+        else
+        {
+            return false;
+        }
+    }
     return true;
 }
 
@@ -82,6 +103,19 @@ int main()
     b = 0.5;
     float delta = 0.01;
     if (zeroDelta1(a, b, delta, x))
+    {
+        cout << "jest " << x << endl;
+    }
+    else
+    {
+        cout << "nie ma" << endl;
+    }
+
+    //d
+    a = 0;
+    b = 0.9;
+    delta = 0.1;
+    if (zeroDelta2(a, b, delta, x))
     {
         cout << "jest " << x << endl;
     }
